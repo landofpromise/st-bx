@@ -1,0 +1,12 @@
+
+2324 [2015-04-10 08:16:34 ] -   [ip=, ref=, ua=, sid=]
+  WARN  c.a.c.webx.config.WebxConfiguration - Application is running in Development Mode.
+
+6457 [2015-04-10 08:16:38 ] -   [ip=, ref=, ua=, sid=]
+  WARN  c.a.c.webx.config.WebxConfiguration - Application is running in Development Mode.
+
+8667 [2015-04-10 08:16:40 ] -   [ip=, ref=, ua=, sid=]
+  WARN  c.a.c.webx.config.WebxConfiguration - Application is running in Development Mode.
+
+10149 [2015-04-10 08:16:42 ] -   [ip=, ref=, ua=, sid=]
+  WARN  c.a.c.webx.config.WebxConfiguration - Application is running in Development Mode.

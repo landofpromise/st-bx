@@ -1,0 +1,83 @@
+
+<header class="ui-header ui-header-positive ui-border-b">
+    <h1  style="line-height:3px">财务分析</h1>
+    <input type="button" class="ui-btn" onclick="location='$petstoreLoginLink'" value="退出"/>
+</header>
+
+<section class="ui-container">
+
+    <section>
+        <div class="demo-item">
+            <div class="demo-block">
+                <div class="ui-form ui-border-t">
+                    <form action="#">
+                        $csrfToken.hiddenField                        
+
+                    #if ($dateError == 1)
+                    <div class="ui-form-item ui-border-b">
+                        <label class="errorMessage" style="width:100%;color:red">当日（$order.orderDate）的报销只能提交一次</label>
+                    </div>
+                    #elseif ($dateError == 2)
+                    <div class="ui-form-item ui-border-b">
+                        <label class="errorMessage" style="width:100%;color:red">当日的报销总额超过80，请核对后再提交</label>
+                    </div>
+                    #else
+
+                        <div class="ui-form-item ui-border-b">
+                            <label>应报人数：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.totalNum"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>已报人数：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.knownNum"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>总金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.sumOfMoney"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>平均金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageMoney"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>早餐金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageBreakfast"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>午餐金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageLunch"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>晚餐金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageDinner"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>饮料金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageDrink"/>
+                        </div>
+                       	<div class="ui-form-item ui-border-b">
+                            <label>交通金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageCarfare"/>
+                        </div>
+                        <div class="ui-form-item ui-border-b">
+                            <label>其他金额：</label>
+                            <input type="text" readonly="readonly" value="$!financeAnal.averageOther"/>
+                        </div>
+                    #end                    	
+                        <div class="ui-form-item ui-border-b">
+                            <label>                             
+                            </label>                            
+                        </div>	                    
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</section>
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t"> 
+        <li class="ui-border-r"><div><input class="ui-btn" type="button" onclick="location='$lopStFinanceLink'" value="审批报销"/></div></li>
+        <li ><div class="ui-reddot"><input class="ui-btn" type="button" onclick="location='$lopStFinanceModule.setTarget("financialanalysis")'" value="财务分析"/></div></li> 
+        <li ><div><input class="ui-btn" type="button" onclick="location='$userModule.setTarget("account").addQueryData("userType", "finance")'" value="我的信息"/></div></li>       
+    </ul>
+</footer>

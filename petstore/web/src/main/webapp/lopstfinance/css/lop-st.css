@@ -1,0 +1,56 @@
+.categoryName {
+    FONT-WEIGHT: bold;
+    FONT-SIZE: x-large;
+    COLOR: #000099;
+    FONT-FAMILY: "Times New Roman", Times, serif;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-top-style: none;
+    border-right-style: none;
+    border-bottom-style: solid;
+    border-left-style: none;
+    border-top-color: #999999;
+    border-right-color: #999999;
+    border-bottom-color: #999999;
+    border-left-color: #999999;
+    padding-bottom: 10px;
+}
+
+.subcategoryName {
+    FONT-WEIGHT: normal;
+    FONT-SIZE: small;
+    COLOR: #333333;
+    FONT-FAMILY: Arial, Helvetica, sans-serif
+}
+
+.lopTitle {
+    color: #0000FF;
+    white-space: nowrap;
+    width: 200px;    
+    height: 30px;
+}
+.financeTable {	      
+    white-space: pre-line;   
+    width: 800px;    
+}
+.financeTable th, .financeTable td 
+{  
+  	font-size:1em;
+  	border:1px solid #98bf21;  	
+}
+.financeTable th 
+{  		
+  	background-color:#A7C942;
+  	color:#ffffff;
+  	height: 30px;
+}
+
+.financeTable td 
+{	
+  	color:#000000;
+  	background-color:#EAF2D3;
+  	padding:3px 7px 2px 7px;
+  	height: 30px;
+}

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="TmpOrder">
+    <typeAlias alias="tmporder" type="com.alibaba.sample.petstore.dal.dataobject.TmpOrder" />
+    <resultMap id="orderResult" class="tmporder">
+        <result property="orderId" column="ORDERID" />
+        <result property="userId" column="USERID" />
+        <result property="leaderName" column="LEADERNAME" />
+        <result property="orderDate" column="ORDERDATE" />
+        <result property="breakfast" column="BREAKFAST" />
+        <result property="lunch" column="LUNCH" />
+        <result property="dinner" column="DINNER" />
+        <result property="drink" column="DRINK" />
+        <result property="carfare" column="CARFARE" />
+        <result property="other" column="OTHER" />
+        <result property="subprice" column="SUBPRICE" />
+        <result property="totalprice" column="TOTALPRICE" />
+        <result property="commonts" column="COMMONTS" />  
+        <result property="commonts1" column="COMMONTS1" />
+        <result property="headmanId" column="HEADMANID" />        
+    </resultMap>
+    <statement id="getTmpOrder" resultMap="orderResult" parameterClass="int"><![CDATA[
+        select
+            TMPORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID
+        from TMPORDERS where TMPORDERS.ORDERID = #value# 
+    ]]></statement>
+    <select id="getTmpOrdersByUserId" resultMap="orderResult" parameterClass="string"><![CDATA[
+        select
+            TMPORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID
+        from TMPORDERS where TMPORDERS.USERID = #value# 
+        ORDER BY ORDERDATE
+    ]]></select>    
+    <select id="getTmpOrderListByLeaderName" resultMap="orderResult" parameterClass="string"><![CDATA[
+        select
+            	TMPORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            	DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            	TOTALPRICE, COMMONTS ,COMMONTS1, HEADMANID
+        from 
+        		TMPORDERS
+        where 
+        		TMPORDERS.LEADERNAME = #value#         	
+        ORDER BY ORDERDATE
+    ]]></select>
+    <!-- <select id="tmpOrderIsEmpty" resultMap="int" ><![CDATA[
+        select 
+        		COUNT(*) 
+        from 
+        		TMPORDERS
+    ]]></select> -->
+    <insert id="insertTmpOrder" parameterClass="tmporder"><![CDATA[
+        insert into TMPORDERS (ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID)
+        values (#orderId#, #userId#, #leaderName:NVARCHAR#, #orderDate#, #breakfast#, #lunch#, #dinner#,
+            #drink#, #carfare#, #other#, #subprice#, #totalprice#, #commonts:NVARCHAR#, #commonts1:NVARCHAR#, #headmanId#)
+    ]]></insert>    
+    <!--
+      - ===============================================
+      - 更新一个Order对象
+      - ===============================================
+     -->
+    <update id="updateTmpOrder" parameterClass="tmporder"><![CDATA[
+        update
+                TMPORDERS
+        set                
+                USERID = #userId#, 
+                LEADERNAME = #leaderName:NVARCHAR#, 
+                ORDERDATE = #orderDate#, 
+                BREAKFAST = #breakfast#, 
+                LUNCH = #lunch#,
+            	DINNER = #dinner#, 
+            	DRINK = #drink#, 
+            	CARFARE = #carfare#, 
+            	OTHER = #other#, 
+            	SUBPRICE = #subprice#,
+            	TOTALPRICE = #totalprice#, 
+            	COMMONTS = #commonts:NVARCHAR#, 
+            	COMMONTS1 = #commonts1:NVARCHAR#, 
+            	HEADMANID = #headmanId#                 
+        where
+                ORDERID = #orderId#
+    ]]></update>      
+    <!--
+      - ===============================================
+      - 删除一个Order对象
+      - ===============================================
+     -->
+    <delete id="deleteTmpOrderByOrderId" parameterClass="int"><![CDATA[
+        delete
+                
+        from                 
+                TMPORDERS             
+        where
+                ORDERID = #orderId#
+    ]]></delete> 
+    
+    <!--
+      - ===============================================
+      - 删除一个Order对象
+      - ===============================================
+     -->
+    <delete id="deleteTmpOrderByUserId" parameterClass="string"><![CDATA[
+        delete
+               
+        from                 
+                TMPORDERS             
+        where
+                USERID = #userId#
+    ]]></delete>   
+    <!--
+      - ===============================================
+      - 删除所有Order对象
+      - ===============================================
+     -->
+    <delete id="deleteAll"><![CDATA[
+        delete
+               
+        from                 
+                TMPORDERS  
+    ]]></delete>   
+    
+</sqlMap>

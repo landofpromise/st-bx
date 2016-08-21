@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:p="http://www.springframework.org/schema/p"
+             xmlns:services="http://www.alibaba.com/schema/services"
+             xmlns:fm-conditions="http://www.alibaba.com/schema/services/form/conditions"
+             xmlns:fm-validators="http://www.alibaba.com/schema/services/form/validators"
+             xsi:schemaLocation="
+                 http://www.alibaba.com/schema/services http://localhost:8080/schema/services.xsd
+                 http://www.alibaba.com/schema/services/form/conditions http://localhost:8080/schema/services-form-conditions.xsd
+                 http://www.alibaba.com/schema/services/form/validators http://localhost:8080/schema/services-form-validators.xsd
+                 http://www.springframework.org/schema/beans http://localhost:8080/schema/www.springframework.org/schema/beans/spring-beans.xsd
+             ">
+             
+	<services:form>
+        <!--
+          - ===============================================
+          - 用来检查csrf token。
+          - ===============================================
+         -->
+       <group name="csrfTokenCheckGroup">
+            <field name="csrfToken">
+                <fm-validators:csrf-validator>
+                    <message>提交的数据已过期</message>
+                </fm-validators:csrf-validator>
+            </field>
+        </group>   
+        
+        <group name="LopBxOrderDate" extends="csrfTokenCheckGroup">
+            <field name="orderDate" displayName="申请日期">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>
+                <fm-validators:date-validator format="yyyy-MM-dd">
+			        <message>${displayName} 必须是日期，格式为 ${format}</message>
+			    </fm-validators:date-validator>
+            </field> 
+        </group>   
+        
+        <group name="leader" extends="csrfTokenCheckGroup">
+            <field name="orderId" displayName="申请单ID">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator> 
+            </field>                 
+            <field name="name" displayName="名字">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+            </field>     
+            <field name="leaderName" displayName="组长名字">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+            </field>               
+        </group>   
+        
+        <group name="requisition" extends="csrfTokenCheckGroup">
+            <field name="orderDate" displayName="申请日期">
+                <!-- <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>
+                <fm-validators:date-validator format="yyyy-MM-dd">
+			        <message>${displayName} 必须是日期，格式为 ${format}</message>
+			    </fm-validators:date-validator> -->
+            </field>
+            <field name="breakfast" displayName="早餐费用">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>
+            <field name="lunch" displayName="午餐费用">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>
+            <field name="dinner" displayName="晚餐费用">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>
+            <field name="drink" displayName="饮料费用">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>
+            <field name="carfare" displayName="交通费用">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>      
+            <field name="other" displayName="其他费用">
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>
+            <!-- <field name="subprice" displayName="小计">
+                <fm-validators:required-validator>
+                    <message>必须填写${displayName}</message>
+                </fm-validators:required-validator>                
+                <fm-validators:number-validator numberType="bigDecimal" greaterThanOrEqualTo="0" lessThan="1000">
+			        <message>${displayName} 必须是位于 ${lessThan} 和 ${greaterThanOrEqualTo}之间的数字</message>
+			    </fm-validators:number-validator>
+            </field>    -->         
+            <field name="commonts" displayName="备注">
+                <fm-validators:string-length-validator minLength="1" maxLength="100">
+			        <message>${displayName} 最少必须由${minLength}个字组成，最多不能超过${maxLength}个字</message>
+			    </fm-validators:string-length-validator>
+            </field>                   
+        </group>     
+    </services:form>
+
+</beans:beans>

@@ -1,0 +1,144 @@
+<link rel="stylesheet" href="$lopStMemberContent.getURI("css/bootstrap.min.css")" type="text/css"/>
+
+#macro (leaderMessage $field)
+    #if (!$field.valid) $field.message #end
+#end
+#if (0)
+
+#else
+<header class="ui-header ui-header-positive ui-border-b">
+    <h1 style="line-height: 3px;">大组长审核</h1>       
+	<input type="button" class="ui-btn" onclick="location='$petstoreLoginLink'" value="退出"/>
+</header>
+
+<section class="ui-container">
+
+    <section>
+        <div class="demo-item">
+            <div class="demo-block">
+                <div class="ui-form ui-border-t">
+                    <form action="$lopStHeadmanModule.setTarget("examineandapprove")" method="post">      
+                    	$csrfToken.hiddenField
+						<input type="hidden" name="action" value="ExamineandapproveAction"/>
+						  
+						#set ($group = $form.leader.defaultInstance)
+						$group.mapTo($leader)
+						                	
+						<div class="content" style="padding-top:0px;">
+				            <table class="table table-bordered table-hover table-item" align="center">
+				                <thead>
+				                <tr>
+				                    <th>姓名</th>
+				                    <th>日期</th>
+				                    <th>早餐</th>
+				                    <th>中餐</th>
+				                    <th>晚餐</th>
+				                    <th>饮料</th>
+				                    <th>交通</th>
+				                    <th>其他</th>
+				                    <th>小计</th>
+				                    <th>备注</th>
+				                    <th>状态</th>
+				                    <th>操作</th>
+				                </tr>
+				                </thead>
+				                <tbody>
+				                #if ($orderList.empty)
+									<tr>
+										<td colspan="12">没有未处理的申请</td>
+									</tr>
+								#else	
+							        #foreach($order in $orderList)
+							        <tr>
+							          <td class="subcategoryName">
+									  	<a href="$lopStHeadmanModule.setTarget("requisitionEdit").addQueryData("orderId", $order.orderId)" title="$order.name">$order.name</a>
+									  </td>	          
+							          <td>$order.orderDate</td>
+							          <td>$order.breakfast</td>
+							          <td>$order.lunch</td>
+							          <td>$order.dinner</td>
+							          <td>$order.drink</td>
+							          <td>$order.carfare</td>
+							          <td>$order.other</td>							          
+							          <td>$order.subprice</td>
+							          <td>$order.commonts</td>
+							          <td>$order.status</td>
+							          <td width="8"><input type="button" value="通过" onclick="location='$lopStHeadmanModule.setTarget("examineandapprove").addQueryData("orderId", $order.orderId)'" class="btn btn-primary " style="margin-left: 6px"/></td>  
+							        </tr>  
+							        #end
+							    #end							    
+							    #if (0)
+							    
+							    #else
+							    <tr>
+				                    <td>大组合计：</td>
+				                    <td colspan="4">
+				                        <input class="form-control" type="text" readonly="readonly" name="$group.totalprice.key" value="$!group.totalprice.value"/>
+				                    </td>				                    
+				                    <td>大组备注：</td>
+				                    <td colspan="7">
+				                        <textarea class="form-control" name="$group.commonts.key">$!group.commonts.value</textarea>
+				                    </td>				                   			                    
+				                </tr>
+				                <tr>				                    			                    
+				                    <td class="errorMessage" colspan="13">
+							            #leaderMessage ($group.totalprice)
+							      	</td>  				                    
+				                   					                    		                    
+				                </tr>
+				                <tr>				                    			                    				                     				                    
+				                    <td class="errorMessage" colspan="13">
+				                        #leaderMessage ($group.commonts)
+				                    </td>					                    		                    
+				                </tr>					                
+							    #end
+							    <tr>      
+							      <td colspan="13">
+							       	 <input type="hidden" name="$group.orderId.key" value="$!group.orderId.value"/>
+							      </td>      
+							    </tr>
+							    #if ($orderList.empty)
+							    
+							    #else    
+								    #if (0 == $leaderError)
+								    <tr align="center">
+								      <td colspan="13">								      
+								      	<input type="submit" value="提交大组报销" class="btn btn-success " style="margin-left: 6px" name="event_submit_do_addorders">
+								      </td>
+								    </tr>
+								    #elseif (1 == $leaderError)
+								    <tr>
+								      <td class="errorMessage" colspan="13">
+								      	注：您还没有申请，暂时不能提交！！！
+								      </td>
+								    </tr>    
+								    #end  
+								    <tr>      
+								      <td colspan="13">								       	 
+								      </td>      
+								    </tr>  
+								    <tr>      
+								      <td colspan="13">								       	 
+								      </td>      
+								    </tr>  
+							    #end				                 						        
+				                </tbody>
+				            </table>
+				        </div>                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</section><!-- /.ui-container-->
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t">
+    	<li class="ui-border-r"><div><input class="ui-btn" type="button" onclick="location='$lopStHeadmanModule.setTarget("requisition").addQueryData("orderId", "0")'" value="申请报销"/></div></li>
+        <li class="ui-border-r"><div><input class="ui-btn" type="button" onclick="location='$lopStHeadmanModule.setTarget("aplicationstatus")'" value="报销记录"/></div></li>
+        <li class="ui-border-r"><div class="ui-reddot"><input class="ui-btn" type="button" onclick="location='$lopStHeadmanModule.setTarget("examineandapprove").addQueryData("orderId", 0)'" value="审批报销"/></div></li>
+        #if (0)
+        <li ><div><input class="ui-btn" type="button" onclick="location='$userModule.setTarget("account").addQueryData("userType", "headman")'" value="我的信息"/></div></li>       
+    	#end
+    </ul>
+</footer>
+#end

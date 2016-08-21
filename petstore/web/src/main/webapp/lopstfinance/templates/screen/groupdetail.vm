@@ -1,0 +1,125 @@
+$page.addStyleSheet("$lopStFinanceContent.getURI('css/lop-st.css')")
+
+#if (0)
+
+#else
+<header class="ui-header ui-header-positive ui-border-b">
+    <h1 style="line-height:3px">组长报销详情</h1>    
+    #if (0)
+    <button class="ui-btn">退出</button>
+	#else
+	<input type="button" class="ui-btn" onclick="location='$petstoreLoginLink'" value="退出"/>
+	#end
+</header>
+
+<section class="ui-container">
+
+    <section>
+        <div class="demo-item">
+            <div class="demo-block">
+                <div class="ui-form ui-border-t">
+                    <form action="" method="post">      
+                    	$csrfToken.hiddenField
+					    <input type="hidden" name="action" value="groupdetailAction"/>  	
+					  	
+					    #set ($group = $form.leader.defaultInstance)
+					    $group.mapTo($leader)    
+					    <input type="hidden" name="$group.orderId.key" value="$!group.orderId.value"/>  
+					    <input type="hidden" name="$group.leaderName.key" value="$!group.leaderName.value"/>  
+    
+						      	
+						<div class="content" style="padding-top:0px">
+				            <table class="table table-bordered table-hover table-item" align="center">
+				                <thead>
+				         		<tr>
+								  <td colspan="2"><font size="3">名字：</font></td> 
+								  <td colspan="7">
+							         <input type="text" class="form-control col-sm-8" name="$group.name.key" placeholder="请输入全名，如：宋宜涛" value="$!group.name.value"/>
+							      </td>         
+								  <td colspan="1">		  	 
+								     <input type="submit" class="ui-btn" value="查询" name="event_submit_do_checkorder" />
+								  </td> 		    
+								</tr>  
+				                <tr>
+						          <th>组员</th>
+						          <th>日期</th>
+						          <th>早餐</th>
+						          <th>中餐</th>
+						          <th>晚餐</th>
+						          <th>饮料</th>
+						          <th>交通</th>
+						          <th>其他</th>
+						          <th>备注</th>
+						          <th>小计</th>
+						        </tr>  
+				                </thead>
+				                <tbody>				                
+						        #if ($orders.empty)
+									<tr>
+										<td colspan="10">没有组长$leaderName的申请</td>
+									</tr>
+								#else	
+									#foreach($order in $orders)	
+							        <tr>
+							          <td>$order.name</td>
+							          <td>$order.orderDate</td>
+							          <td>$order.breakfast</td>
+							          <td>$order.lunch</td>
+							          <td>$order.dinner</td>
+							          <td>$order.drink</td>
+							          <td>$order.carfare</td>
+							          <td>$order.other</td>
+							          <td>$order.commonts</td>
+							          <td>$order.subprice</td>	          
+							        </tr> 
+							        #end 
+							        <tr>   
+							            
+							          <td colspan="10" align="left">备注：$leader.commonts1</td>
+							        </tr>  
+						        #end         						        
+				                </tbody>
+				            </table>				            
+				        </div>	
+				        <div>				        	
+				        	<table class="table">				                
+				                <tbody>	
+							        <tr>	  
+									  <td align="right"><hr size="1"/><br/>总计：$totalprice</td>	 
+									</tr> 
+								    <tr>          
+								      <td>
+								      	#if ($ctrl > 0)
+								      	
+								      	#else
+										<input type="submit" class="ui-btn" value="结算" name="event_submit_do_clearing" />
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+										<input type="submit" class="ui-btn" value="拒绝" name="event_submit_do_refuse" />
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  
+										#end
+										<input type="button" class="ui-btn" value="返回" onclick="location='$lopStFinanceModule.setTarget("lopstfinance")'"/>
+									  </td>
+								    </tr>  
+								    <tr>	  
+									  <td ></td>	 
+									</tr> 
+									<tr>	  
+									  <td ></td>	 
+									</tr> 						        
+				                </tbody>
+				            </table>
+				        </div>				                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</section><!-- /.ui-container-->
+<footer class="ui-footer ui-footer-btn">
+    <ul class="ui-tiled ui-border-t"> 
+        <li class="ui-border-r"><div class="ui-reddot"><input class="ui-btn" type="button" onclick="location='$lopStFinanceLink'" value="审批报销"/></div></li>
+        <li ><div><input class="ui-btn" type="button" onclick="location='$lopStFinanceModule.setTarget("financialanalysis")'" value="财务分析"/></div></li> 
+        <li ><div><input class="ui-btn" type="button" onclick="location='$userModule.setTarget("account").addQueryData("userType", "finance")'" value="我的信息"/></div></li>       
+    </ul>
+</footer>
+#end

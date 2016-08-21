@@ -1,0 +1,11 @@
+<table cellspacing=0 cellpadding=0 width="100%" border=0>
+  <tr valign=bottom>    
+    <td width="1" align="left">$control.setTemplate("headmannav")</td>
+  </tr>
+  <tr>
+    <td colspan=1><hr></td>
+  </tr>
+  <tr>
+    <td colspan=1>&nbsp;</td>
+  </tr>
+</table>

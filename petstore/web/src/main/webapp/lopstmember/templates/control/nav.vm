@@ -1,0 +1,25 @@
+<table cellspacing=0 cellpadding=0 border=1>
+<tr valign="middle" align="center">
+  <td class="lopTitle">   
+    <a href="$lopStMemberAplicationStatusLink">查看已报销记录</a>
+  </td>  
+  <td class="lopTitle">   
+    <a href="$lopStMemberHomeLink">申请报销</a>
+  </td>  
+  #if (0)
+  <td class="lopTitle">   
+    <a href="$petstoreRegisterLink">注册</a>
+  </td>  
+  #end
+  <td class="lopTitle">  	
+    #if ($petstoreUser.hasLoggedIn())
+      <a href="$petstoreLogoutLink">退出 $petstoreUser.id</a>
+    #else
+      <a href="$petstoreLoginLink">登录</a>
+    #end
+  </td> 
+  <td class="lopTitle">   	
+    <a href="$userModule.setTarget("account").addQueryData("userType", "member")">用户信息</a>
+  </td>    
+</tr>
+</table>

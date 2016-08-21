@@ -1,0 +1,7 @@
+<form action="$lopStMemberHomeLink" method="post">
+    <table width="100%"  border="0" cellspacing="0" cellpadding="10">
+        <tr>
+            <td width="1" align="left">$control.setTemplate("requisition")</td>
+        </tr>
+    </table>
+</form>

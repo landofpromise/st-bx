@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="User">
+    <typeAlias alias="user" type="com.alibaba.sample.petstore.dal.dataobject.LopBxUser" />
+    <!--
+      - ===============================================
+      - 将user、account、profile三张表映射到User类
+      - ===============================================
+     -->
+    <resultMap id="userResult" class="user">
+        <result property="userId" column="PHONE" />
+        <result property="role" column="ROLES" />
+        <result property="account.name" column="NAME" />      
+        <result property="account.leaderName" column="LEADERNAME" />    
+        <result property="account.phone" column="PHONE" />
+        <result property="account.alipayAccount" column="ALIPAY_ACCOUNT" />  
+    </resultMap>
+    <!--
+      - ===============================================
+      - 通过userId查找user、account、profile
+      - ===============================================
+     -->
+     <sql id="getUserField">
+     	select
+                NAME, (case when is_dzz=1 then 'headman' when is_dzz=0 then 'stmember' else 'finance' end ) ROLES, 
+                dzz_name LEADERNAME, PHONE, PHONE ALIPAY_ACCOUNT
+        from
+                st2016</sql>
+     
+    <select id="getUserByUserId" resultMap="userResult" parameterClass="string">
+        <include refid="getUserField"/>
+        where phone = #userId#
+    </select>
+    <!--
+      - ===============================================
+      - 通过userId查找user、account、profile
+      - ===============================================
+     -->
+    <select id="getUsersByName" resultMap="userResult" parameterClass="string">
+        <include refid="getUserField"/>
+          where      NAME = #name#
+    </select>
+    <!--
+      - ===============================================
+      - 验证userId、password，并返回user、account
+      - ===============================================
+     -->
+    <select id="getUserByUserIdAndPassword" resultMap="userResult" parameterClass="user">
+        <include refid="getUserField"/>                
+        where phone = #userId# and 
+            substring(phone, 6, 6) = #password#
+    </select>
+    <!--
+      - ===============================================
+      - 列出所有的userId
+      - ===============================================
+     -->
+    <select id="getUserIdList" resultClass="string" parameterClass="user"><![CDATA[
+        select
+                id as value
+        from
+                st2016
+    ]]></select>
+    <!--
+      - ===============================================
+      - 列出所有组长的ACCOUNT
+      - ===============================================
+     -->
+    <!-- <select id="getLeaderListByRole" resultMap="userResult" parameterClass="string"><![CDATA[
+        select
+                ACCOUNT.*
+        from
+               	ACCOUNT
+                left join USER on ACCOUNT.USER_ID = USER.USER_ID
+      	where
+                CONTAINS(USER.ROLES, #role#)
+        ORDER BY ACCOUNT.NAME     
+    ]]></select>     -->
+    <select id="getLeaderListByRole" resultMap="userResult" parameterClass="string">
+        <include refid="getUserField"/>  
+                
+        where   is_dzz=#value#  order by NAME     
+    </select>
+    <!--
+      - ===============================================
+      - 创建一个user对象
+      - ===============================================
+     -->
+    <insert id="insertUser" parameterClass="user"><![CDATA[
+        insert into LOP_BX_USER (
+                USER_ID,
+                PASSWORD,
+                ROLES
+        ) values (
+                #userId#,
+                #password#,
+                #role#
+        )
+    ]]></insert>
+    <!--
+      - ===============================================
+      - 更新一个user对象
+      - ===============================================
+     -->
+    <update id="updateUser" parameterClass="user"><![CDATA[
+        update
+                LOP_BX_USER
+        set
+                PASSWORD = #password#,
+                ROLES = #role#
+        where
+                USER_ID = #userId#
+    ]]></update>
+    <!--
+      - ===============================================
+      - 创建一个account对象
+      - ===============================================
+     -->
+    <insert id="insertAccount" parameterClass="user"><![CDATA[
+        insert into LOP_BX_ACCOUNT (
+                USER_ID,
+                EMAIL,
+                NAME,
+                LEADERNAME,
+                PHONE,                              
+                ALIPAY_ACCOUNT
+        ) values (
+                #userId#,
+                #account.email#,
+                #account.name:nvarchar#, 
+                #account.leaderName:nvarchar#,                
+                #account.phone#,
+                #account.alipayAccount#
+        )
+    ]]></insert>
+    <!--
+      - ===============================================
+      - 更新一个account对象
+      - ===============================================
+     -->
+    <update id="updateAccount" parameterClass="user"><![CDATA[
+        update
+                LOP_BX_ACCOUNT
+        set
+                EMAIL = #account.email#,
+                NAME = #account.name#,                
+                PHONE = #account.phone#,
+                ALIPAY_ACCOUNT = #account.alipayAccount#                
+        where
+                USER_ID = #userId#
+    ]]></update>     
+</sqlMap>

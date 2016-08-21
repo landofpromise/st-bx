@@ -1,0 +1,6 @@
+$page.setTitle("ST 财务!")
+
+<form action="$lopStFinanceModule.setTarget("lopstfinance")" method="post">
+    $csrfToken.hiddenField
+	$control.setTemplate("lopstfinance")
+</form>

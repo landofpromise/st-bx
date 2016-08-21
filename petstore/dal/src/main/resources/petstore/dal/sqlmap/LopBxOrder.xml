@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" "http://www.ibatis.com/dtd/sql-map-2.dtd">
+<sqlMap namespace="Order">
+    <typeAlias alias="order" type="com.alibaba.sample.petstore.dal.dataobject.LopBxOrder" />
+    <resultMap id="orderResult" class="order">
+        <result property="orderId" column="ORDERID" />
+        <result property="userId" column="USERID" />
+        <result property="leaderName" column="LEADERNAME" />
+        <result property="orderDate" column="ORDERDATE" />
+        <result property="breakfast" column="BREAKFAST" />
+        <result property="lunch" column="LUNCH" />
+        <result property="dinner" column="DINNER" />
+        <result property="drink" column="DRINK" />
+        <result property="carfare" column="CARFARE" />
+        <result property="other" column="OTHER" />
+        <result property="subprice" column="SUBPRICE" />
+        <result property="totalprice" column="TOTALPRICE" />
+        <result property="commonts" column="COMMONTS" />
+        <result property="commonts1" column="COMMONTS1" />
+        <result property="headmanId" column="HEADMANID" />
+        <result property="orderStatus.status" column="STSTATUS" />        
+    </resultMap>
+    <statement id="getOrder" resultMap="orderResult" parameterClass="int"><![CDATA[
+        select
+            LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from LOP_BX_ORDERS, LOP_BX_ORDERSTATUS where LOP_BX_ORDERS.ORDERID = #value# and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+    ]]></statement>
+    <select id="getOrdersByUserId" resultMap="orderResult" parameterClass="string"><![CDATA[
+        select
+            LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from LOP_BX_ORDERS, LOP_BX_ORDERSTATUS where LOP_BX_ORDERS.USERID = #value# and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+        ORDER BY HEADMANID
+    ]]></select>
+    <select id="getOrderListByLeaderName" resultMap="orderResult" parameterClass="string"><![CDATA[
+        select
+            	LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            	DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            	TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from 
+        		LOP_BX_ORDERS, LOP_BX_ORDERSTATUS 
+        where 
+        		LOP_BX_ORDERS.LEADERNAME = #value# 
+        	and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+        ORDER BY ORDERDATE
+    ]]></select>
+    <statement id="getOrdersByHeadmanId" resultMap="orderResult" parameterClass="order"><![CDATA[
+        select
+            	LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            	DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            	TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from 
+        		LOP_BX_ORDERS, LOP_BX_ORDERSTATUS 
+        where 
+        		LOP_BX_ORDERS.HEADMANID = #headmanId# 
+        	and LOP_BX_ORDERS.LEADERNAME = #leaderName#
+        	and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+        ORDER BY HEADMANID
+    ]]></statement>
+    <statement id="getOrdersByLeaderAndDate" resultMap="orderResult" parameterClass="order"><![CDATA[
+        select
+            	LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            	DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            	TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from 
+        		LOP_BX_ORDERS, LOP_BX_ORDERSTATUS 
+        where 
+        		LOP_BX_ORDERS.LEADERNAME = #leaderName# 
+        	and LOP_BX_ORDERS.ORDERDATE = #orderDate#
+        	and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+    ]]></statement>
+    <statement id="getOrdersByUserIdAndDate" resultMap="orderResult" parameterClass="order"><![CDATA[
+        select
+            	LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            	DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            	TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from 
+        		LOP_BX_ORDERS, LOP_BX_ORDERSTATUS 
+        where 
+        		LOP_BX_ORDERS.USERID = #userId# 
+        	and LOP_BX_ORDERS.ORDERDATE = #orderDate#
+        	and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+    ]]></statement>
+    <statement id="getOrdersByStatus" resultMap="orderResult" parameterClass="string"><![CDATA[
+        select
+            	LOP_BX_ORDERS.ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            	DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            	TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID, STSTATUS
+        from 
+        		LOP_BX_ORDERS, LOP_BX_ORDERSTATUS 
+        where 
+        		STSTATUS = #value#         
+        	and LOP_BX_ORDERS.ORDERID = LOP_BX_ORDERSTATUS.ORDERID
+        ORDER BY HEADMANID
+    ]]></statement>
+    <insert id="insertOrder" parameterClass="order"><![CDATA[
+        insert into LOP_BX_ORDERS (ORDERID, USERID, LEADERNAME, ORDERDATE, BREAKFAST, LUNCH,
+            DINNER, DRINK, CARFARE, OTHER, SUBPRICE,
+            TOTALPRICE, COMMONTS, COMMONTS1, HEADMANID)
+        values (#orderId#, #userId#, #leaderName:NVARCHAR#, #orderDate#, #breakfast#, #lunch#, #dinner#,
+            #drink#, #carfare#, #other#, #subprice#, #totalprice#, #commonts:NVARCHAR#, #commonts1:NVARCHAR#, #headmanId#)
+    ]]></insert>
+    <insert id="insertOrderStatus" parameterClass="order"><![CDATA[
+        insert into LOP_BX_ORDERSTATUS (ORDERID, STSTATUS)
+        values (#orderId:NUMERIC#, #orderStatus.status:NVARCHAR#)
+    ]]></insert>
+    <!--
+      - ===============================================
+      - 更新一个Order对象
+      - ===============================================
+     -->
+    <update id="updateOrder" parameterClass="order"><![CDATA[
+        update
+                LOP_BX_ORDERS
+        set                
+                USERID = #userId#, 
+                LEADERNAME = #leaderName:NVARCHAR#, 
+                ORDERDATE = #orderDate#, 
+                BREAKFAST = #breakfast#, 
+                LUNCH = #lunch#,
+            	DINNER = #dinner#, 
+            	DRINK = #drink#, 
+            	CARFARE = #carfare#, 
+            	OTHER = #other#, 
+            	SUBPRICE = #subprice#,
+            	TOTALPRICE = #totalprice#, 
+            	COMMONTS = #commonts:NVARCHAR#, 
+            	COMMONTS1 = #commonts1:NVARCHAR#, 
+            	HEADMANID = #headmanId#             
+        where
+                ORDERID = #orderId#
+    ]]></update>   
+    <!--
+      - ===============================================
+      - 更新一个OrderStatus对象
+      - ===============================================
+     -->
+    <update id="updateOrderStatus" parameterClass="order"><![CDATA[
+        update
+                LOP_BX_ORDERSTATUS               
+        set                
+                STSTATUS = #orderStatus.status#                        
+        where
+                ORDERID = #orderId#
+    ]]></update>  
+    <!--
+      - ===============================================
+      - 删除一个Order对象
+      - ===============================================
+     -->
+    <delete id="deleteOrderByOrderId" parameterClass="int"><![CDATA[
+        delete
+                
+        from                 
+                LOP_BX_ORDERS             
+        where
+                ORDERID = #orderId#
+    ]]></delete>   
+    <!--
+      - ===============================================
+      - 删除一个OrderStatus对象
+      - ===============================================
+     -->
+    <delete id="deleteOrderStatusByOrderId" parameterClass="int"><![CDATA[
+        delete
+                               
+        from                
+                LOP_BX_ORDERSTATUS                          
+        where
+                ORDERID = #orderId#
+    ]]></delete>   
+</sqlMap>
